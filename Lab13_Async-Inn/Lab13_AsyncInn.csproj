@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\RoomsInHotels\**" />
+    <Content Remove="Views\RoomsInHotels\**" />
+    <EmbeddedResource Remove="Views\RoomsInHotels\**" />
+    <None Remove="Views\RoomsInHotels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\HomeController1.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\RoomsInHotels\Create.cshtml" />
+    <None Include="Views\RoomsInHotels\Delete.cshtml" />
+    <None Include="Views\RoomsInHotels\Details.cshtml" />
+    <None Include="Views\RoomsInHotels\Edit.cshtml" />
+    <None Include="Views\RoomsInHotels\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>
