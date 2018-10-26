@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Lab13_Async_Inn
+namespace Lab13_AsyncInn
 {
     public class Program
     {
