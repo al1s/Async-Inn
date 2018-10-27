@@ -15,6 +15,16 @@
             <input type="hidden" asp-for="AmenitiesId" />
             <input type="hidden" asp-for="RoomId" />
             <div class="form-group">
+                <label asp-for="RoomId" class="control-label"></label>
+                <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
+                <span asp-validation-for="RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AmenitiesId" class="control-label"></label>
+                <select asp-for="AmenitiesId" class="form-control" asp-items="ViewBag.AmenitiesId"></select>
+                <span asp-validation-for="AmenitiesId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </form>

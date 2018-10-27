@@ -61,6 +61,7 @@ namespace Lab13_AsyncInn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("HotelId,RoomNumber,RoomId,Rate,PetFriendly")] HotelRoom hotelRoom)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(hotelRoom);
@@ -70,6 +71,14 @@ namespace Lab13_AsyncInn.Controllers
             ViewData["HotelId"] = new SelectList(_context.Hotels, "HotelId", "Name", hotelRoom.HotelId);
             ViewData["RoomId"] = new SelectList(_context.Rooms, "RoomId", "Name", hotelRoom.RoomId);
             return View(hotelRoom);
+        }
+        // GET: Check whether we already have the room with a number user has entered
+        public JsonResult CheckRoomNumberExists(int roomNumber)
+        {
+            if (_context.HotelRooms.Any(hr =>
+                hr.RoomNumber == roomNumber
+            )) return Json(true);
+            else return Json(false);
         }
 
         // GET: RoomsInHotels/Edit/5
