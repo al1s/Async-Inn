@@ -1,4 +1,4 @@
-﻿@model Lab13_AsyncInn.Models.HotelRoom
+﻿@model Lab13_AsyncInn.Models.RoomAmenities
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,30 +6,23 @@
 
 <h2>Edit</h2>
 
-<h4>HotelRoom</h4>
+<h4>RoomAmenities</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="HotelId" />
-            <input type="hidden" asp-for="RoomNumber" />
+            <input type="hidden" asp-for="AmenitiesId" />
+            <input type="hidden" asp-for="RoomId" />
             <div class="form-group">
                 <label asp-for="RoomId" class="control-label"></label>
                 <select asp-for="RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
                 <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="PetFriendly" /> @Html.DisplayNameFor(model => model.PetFriendly)
-                    </label>
-                </div>
+                <label asp-for="AmenitiesId" class="control-label"></label>
+                <select asp-for="AmenitiesId" class="form-control" asp-items="ViewBag.AmenitiesId"></select>
+                <span asp-validation-for="AmenitiesId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />

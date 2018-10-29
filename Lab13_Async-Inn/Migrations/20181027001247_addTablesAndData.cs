@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Lab13_AsyncInn.Migrations
 {
-    public partial class addTables : Migration
+    public partial class addTablesAndData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,13 +11,13 @@ namespace Lab13_AsyncInn.Migrations
                 name: "Amenities",
                 columns: table => new
                 {
-                    AmenityId = table.Column<int>(nullable: false)
+                    AmenitiesId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Amenities", x => x.AmenityId);
+                    table.PrimaryKey("PK_Amenities", x => x.AmenitiesId);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,10 +74,9 @@ namespace Lab13_AsyncInn.Migrations
                 {
                     HotelId = table.Column<int>(nullable: false),
                     RoomNumber = table.Column<int>(nullable: false),
-                    RoomId = table.Column<decimal>(nullable: false),
-                    Rate = table.Column<decimal>(nullable: false),
-                    PetFriendly = table.Column<bool>(nullable: false),
-                    RoomId1 = table.Column<int>(nullable: true)
+                    RoomId = table.Column<int>(nullable: false),
+                    Rate = table.Column<decimal>(type: "DECIMAL(18,4)", nullable: false),
+                    PetFriendly = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,28 +88,28 @@ namespace Lab13_AsyncInn.Migrations
                         principalColumn: "HotelId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_HotelRooms_Rooms_RoomId1",
-                        column: x => x.RoomId1,
+                        name: "FK_HotelRooms_Rooms_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "RoomId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "RoomAmenities",
                 columns: table => new
                 {
-                    AmenityId = table.Column<int>(nullable: false),
+                    AmenitiesId = table.Column<int>(nullable: false),
                     RoomId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoomAmenities", x => new { x.AmenityId, x.RoomId });
+                    table.PrimaryKey("PK_RoomAmenities", x => new { x.AmenitiesId, x.RoomId });
                     table.ForeignKey(
-                        name: "FK_RoomAmenities_Amenities_AmenityId",
-                        column: x => x.AmenityId,
+                        name: "FK_RoomAmenities_Amenities_AmenitiesId",
+                        column: x => x.AmenitiesId,
                         principalTable: "Amenities",
-                        principalColumn: "AmenityId",
+                        principalColumn: "AmenitiesId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RoomAmenities_Rooms_RoomId",
@@ -120,10 +119,57 @@ namespace Lab13_AsyncInn.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Amenities",
+                columns: new[] { "AmenitiesId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Kitchen facilities" },
+                    { 2, "Computer and Internet access" },
+                    { 3, "Swimming pool" },
+                    { 4, "Parking" },
+                    { 5, "Air conditioner" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Hotels",
+                columns: new[] { "HotelId", "Address", "Name", "Phone" },
+                values: new object[,]
+                {
+                    { 1, "226 Aurora Ave N, Seattle, WA 98109 - 5007", "Hilton Seattle", "+ 1 877 - 859 - 5095" },
+                    { 2, "425 Queen Anne Avenue North, Seattle, WA 98109 - 4517", "Mediterranean Inn", "(206) 429 - 8799" },
+                    { 3, "2301 3rd Ave, Seattle, WA 98121 - 1711", "Belltown Inn", "(206) 203 - 7040" },
+                    { 4, "3926 Aurora Ave N, Seattle, WA 98103 - 7802", "Staybridge Suites Seattle", "+1 877-859-5095" },
+                    { 5, "1150 Fairview Ave N, Seattle, WA 98109 - 4433", "Silver Cloud Inn", "(206) 429 - 8799" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Layouts",
+                columns: new[] { "LayoutId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Studio" },
+                    { 2, "One bedroom" },
+                    { 3, "Two bedroom" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Rooms",
+                columns: new[] { "RoomId", "LayoutId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Single" },
+                    { 2, 1, "Double" },
+                    { 3, 2, "Triple" },
+                    { 6, 2, "Twin" },
+                    { 4, 3, "Queen" },
+                    { 5, 3, "King" }
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_HotelRooms_RoomId1",
+                name: "IX_HotelRooms_RoomId",
                 table: "HotelRooms",
-                column: "RoomId1");
+                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoomAmenities_RoomId",
@@ -133,8 +179,7 @@ namespace Lab13_AsyncInn.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Rooms_LayoutId",
                 table: "Rooms",
-                column: "LayoutId",
-                unique: true);
+                column: "LayoutId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -23,6 +23,18 @@ namespace Lab13_AsyncInn.Controllers
         public async Task<IActionResult> Index()
         {
             var asyncInnDbContext = _context.Rooms.Include(r => r.Layout);
+            //.Join(_context.Amenities,
+            //    r => r.Amenities,
+            //    a => a.AmenitiesId,
+            //    (r, a) => new 
+            //    {
+            //        Name = r.Name,
+            //        Layout = r.Layout,
+            //        LayoutId = r.LayoutId,
+            //        RoomId = r.RoomId,
+            //        AmenitiesId = a.AmenitiesId,
+            //        Amenity_name = a.Name
+            //    });
             return View(await asyncInnDbContext.ToListAsync());
         }
 
@@ -48,7 +60,7 @@ namespace Lab13_AsyncInn.Controllers
         // GET: Rooms/Create
         public IActionResult Create()
         {
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "LayoutId");
+            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "Name");
             return View();
         }
 
@@ -82,7 +94,7 @@ namespace Lab13_AsyncInn.Controllers
             {
                 return NotFound();
             }
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "LayoutId", room.LayoutId);
+            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "Name", room.LayoutId);
             return View(room);
         }
 

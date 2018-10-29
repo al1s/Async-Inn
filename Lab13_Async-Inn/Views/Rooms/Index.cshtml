@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<Lab13_AsyncInn.Models.Room>
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Index";
 }
 
@@ -19,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Layout.Name)
+                @Html.DisplayNameFor(model => model.Layout.LayoutId)
             </th>
             <th></th>
         </tr>
@@ -42,4 +39,3 @@
 }
     </tbody>
 </table>
-@Html.ActionLink("Home", "Index", "Home")

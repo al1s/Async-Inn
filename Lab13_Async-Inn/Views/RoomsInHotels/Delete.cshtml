@@ -1,9 +1,6 @@
 ﻿@model Lab13_AsyncInn.Models.HotelRoom
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Delete";
 }
 
@@ -30,13 +27,13 @@
             @Html.DisplayNameFor(model => model.Room)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Room.RoomId)
+            @Html.DisplayFor(model => model.Room.Name)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Hotel)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Hotel.HotelId)
+            @Html.DisplayFor(model => model.Hotel.Name)
         </dd>
     </dl>
     

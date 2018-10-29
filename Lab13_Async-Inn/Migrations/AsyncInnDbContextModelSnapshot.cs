@@ -20,15 +20,23 @@ namespace Lab13_AsyncInn.Migrations
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.Amenities", b =>
                 {
-                    b.Property<int>("AmenityId")
+                    b.Property<int>("AmenitiesId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
-                    b.HasKey("AmenityId");
+                    b.HasKey("AmenitiesId");
 
                     b.ToTable("Amenities");
+
+                    b.HasData(
+                        new { AmenitiesId = 1, Name = "Kitchen facilities" },
+                        new { AmenitiesId = 2, Name = "Computer and Internet access" },
+                        new { AmenitiesId = 3, Name = "Swimming pool" },
+                        new { AmenitiesId = 4, Name = "Parking" },
+                        new { AmenitiesId = 5, Name = "Air conditioner" }
+                    );
                 });
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.Hotel", b =>
@@ -46,6 +54,14 @@ namespace Lab13_AsyncInn.Migrations
                     b.HasKey("HotelId");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new { HotelId = 1, Address = "226 Aurora Ave N, Seattle, WA 98109 - 5007", Name = "Hilton Seattle", Phone = "+ 1 877 - 859 - 5095" },
+                        new { HotelId = 2, Address = "425 Queen Anne Avenue North, Seattle, WA 98109 - 4517", Name = "Mediterranean Inn", Phone = "(206) 429 - 8799" },
+                        new { HotelId = 3, Address = "2301 3rd Ave, Seattle, WA 98121 - 1711", Name = "Belltown Inn", Phone = "(206) 203 - 7040" },
+                        new { HotelId = 4, Address = "3926 Aurora Ave N, Seattle, WA 98103 - 7802", Name = "Staybridge Suites Seattle", Phone = "+1 877-859-5095" },
+                        new { HotelId = 5, Address = "1150 Fairview Ave N, Seattle, WA 98109 - 4433", Name = "Silver Cloud Inn", Phone = "(206) 429 - 8799" }
+                    );
                 });
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.HotelRoom", b =>
@@ -80,6 +96,12 @@ namespace Lab13_AsyncInn.Migrations
                     b.HasKey("LayoutId");
 
                     b.ToTable("Layouts");
+
+                    b.HasData(
+                        new { LayoutId = 1, Name = "Studio" },
+                        new { LayoutId = 2, Name = "One bedroom" },
+                        new { LayoutId = 3, Name = "Two bedroom" }
+                    );
                 });
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.Room", b =>
@@ -94,19 +116,27 @@ namespace Lab13_AsyncInn.Migrations
 
                     b.HasKey("RoomId");
 
-                    b.HasIndex("LayoutId")
-                        .IsUnique();
+                    b.HasIndex("LayoutId");
 
                     b.ToTable("Rooms");
+
+                    b.HasData(
+                        new { RoomId = 1, LayoutId = 1, Name = "Single" },
+                        new { RoomId = 2, LayoutId = 1, Name = "Double" },
+                        new { RoomId = 3, LayoutId = 2, Name = "Triple" },
+                        new { RoomId = 4, LayoutId = 3, Name = "Queen" },
+                        new { RoomId = 5, LayoutId = 3, Name = "King" },
+                        new { RoomId = 6, LayoutId = 2, Name = "Twin" }
+                    );
                 });
 
             modelBuilder.Entity("Lab13_AsyncInn.Models.RoomAmenities", b =>
                 {
-                    b.Property<int>("AmenityId");
+                    b.Property<int>("AmenitiesId");
 
                     b.Property<int>("RoomId");
 
-                    b.HasKey("AmenityId", "RoomId");
+                    b.HasKey("AmenitiesId", "RoomId");
 
                     b.HasIndex("RoomId");
 
@@ -129,8 +159,8 @@ namespace Lab13_AsyncInn.Migrations
             modelBuilder.Entity("Lab13_AsyncInn.Models.Room", b =>
                 {
                     b.HasOne("Lab13_AsyncInn.Models.Layout", "Layout")
-                        .WithOne("Room")
-                        .HasForeignKey("Lab13_AsyncInn.Models.Room", "LayoutId")
+                        .WithMany("Room")
+                        .HasForeignKey("LayoutId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -138,7 +168,7 @@ namespace Lab13_AsyncInn.Migrations
                 {
                     b.HasOne("Lab13_AsyncInn.Models.Amenities", "Amenities")
                         .WithMany()
-                        .HasForeignKey("AmenityId")
+                        .HasForeignKey("AmenitiesId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Lab13_AsyncInn.Models.Room", "Room")

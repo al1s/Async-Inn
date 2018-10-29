@@ -1,9 +1,6 @@
 ﻿@model Lab13_AsyncInn.Models.Amenities
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Delete";
 }
 
@@ -23,7 +20,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="AmenityId" />
+        <input type="hidden" asp-for="AmenitiesId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<Lab13_AsyncInn.Models.HotelRoom>
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Index";
 }
 
@@ -27,6 +24,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Hotel)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomNumber)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -46,6 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Hotel.Name)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.RoomNumber)
+            </td>
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { HotelId=item.HotelId, RoomNumber=item.RoomNumber }) |
                 @Html.ActionLink("Details", "Details", new { HotelId=item.HotelId, RoomNumber=item.RoomNumber }) |
                 @Html.ActionLink("Delete", "Delete", new { HotelId=item.HotelId, RoomNumber=item.RoomNumber })
@@ -54,4 +57,3 @@
 }
     </tbody>
 </table>
-@Html.ActionLink("Home", "Index", "Home")

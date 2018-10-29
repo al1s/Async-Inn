@@ -1,9 +1,6 @@
 ﻿@model IEnumerable<Lab13_AsyncInn.Models.Amenities>
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Index";
 }
 
@@ -29,12 +26,11 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.AmenityId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.AmenityId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.AmenityId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.AmenitiesId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.AmenitiesId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AmenitiesId">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@Html.ActionLink("Home", "Index", "Home")

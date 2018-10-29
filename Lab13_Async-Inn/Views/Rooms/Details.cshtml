@@ -1,9 +1,6 @@
 ﻿@model Lab13_AsyncInn.Models.Room
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
-}
-@{
     ViewData["Title"] = "Details";
 }
 
@@ -23,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Layout)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Layout.LayoutId)
+            @Html.DisplayFor(model => model.Layout.Name)
         </dd>
     </dl>
 </div>

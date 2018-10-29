@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Lab13_AsyncInn.Models.RoomAmenities>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Room)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amenities)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amenities.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { RoomId=item.RoomId, AmenitiesId=item.AmenitiesId }) |
+                @Html.ActionLink("Delete", "Delete", new { RoomId=item.RoomId, AmenitiesId=item.AmenitiesId }) |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

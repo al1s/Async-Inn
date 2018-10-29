@@ -34,7 +34,7 @@ namespace Lab13_AsyncInn.Controllers
             }
 
             var amenities = await _context.Amenities
-                .FirstOrDefaultAsync(m => m.AmenityId == id);
+                .FirstOrDefaultAsync(m => m.AmenitiesId == id);
             if (amenities == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace Lab13_AsyncInn.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AmenityId,Name")] Amenities amenities)
+        public async Task<IActionResult> Create([Bind("AmenitiesId,Name")] Amenities amenities)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace Lab13_AsyncInn.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AmenityId,Name")] Amenities amenities)
+        public async Task<IActionResult> Edit(int id, [Bind("AmenitiesId,Name")] Amenities amenities)
         {
-            if (id != amenities.AmenityId)
+            if (id != amenities.AmenitiesId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace Lab13_AsyncInn.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AmenitiesExists(amenities.AmenityId))
+                    if (!AmenitiesExists(amenities.AmenitiesId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace Lab13_AsyncInn.Controllers
             }
 
             var amenities = await _context.Amenities
-                .FirstOrDefaultAsync(m => m.AmenityId == id);
+                .FirstOrDefaultAsync(m => m.AmenitiesId == id);
             if (amenities == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace Lab13_AsyncInn.Controllers
 
         private bool AmenitiesExists(int id)
         {
-            return _context.Amenities.Any(e => e.AmenityId == id);
+            return _context.Amenities.Any(e => e.AmenitiesId == id);
         }
     }
 }

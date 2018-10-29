@@ -13,6 +13,12 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\HomeController1.cs" />
+    <Compile Remove="Migrations\20181025183723_addTables.cs" />
+    <Compile Remove="Migrations\20181025183723_addTables.Designer.cs" />
+    <Compile Remove="Migrations\20181025184230_fixColumnPrecision.cs" />
+    <Compile Remove="Migrations\20181025184230_fixColumnPrecision.Designer.cs" />
+    <Compile Remove="Migrations\20181026215337_addModifiedMockData.cs" />
+    <Compile Remove="Migrations\20181026215337_addModifiedMockData.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
