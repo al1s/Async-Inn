@@ -15,9 +15,26 @@ namespace Lab13_AsyncInn
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        private string _azureConnection = null;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+        }
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json",
+                             optional: false,
+                             reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            Configuration = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -26,6 +43,7 @@ namespace Lab13_AsyncInn
         {
             services.AddMvc();
             services.AddDbContext<AsyncInnDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            _azureConnection = Configuration["AzureConnection"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
