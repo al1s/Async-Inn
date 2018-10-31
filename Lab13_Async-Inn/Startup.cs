@@ -34,6 +34,7 @@ namespace Lab13_AsyncInn
             services.AddTransient<IAmenities, AmenitiesService>();
             services.AddTransient<IHotel, HotelService>();
             services.AddTransient<IRoom, RoomService>();
+            services.AddTransient<ILayout, LayoutService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
