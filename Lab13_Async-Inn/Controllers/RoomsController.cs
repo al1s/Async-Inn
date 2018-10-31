@@ -7,35 +7,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Interfaces;
 
 namespace Lab13_AsyncInn.Controllers
 {
     public class RoomsController : Controller
     {
-        private readonly AsyncInnDbContext _context;
+        private readonly IRoom _rooms;
+        private readonly ILayout _layout;
 
-        public RoomsController(AsyncInnDbContext context)
+        public RoomsController(IRoom context, ILayout layout)
         {
-            _context = context;
+            _rooms = context;
+            _layout = layout;
         }
 
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
-            var asyncInnDbContext = _context.Rooms.Include(r => r.Layout);
-            //.Join(_context.Amenities,
-            //    r => r.Amenities,
-            //    a => a.AmenitiesId,
-            //    (r, a) => new 
-            //    {
-            //        Name = r.Name,
-            //        Layout = r.Layout,
-            //        LayoutId = r.LayoutId,
-            //        RoomId = r.RoomId,
-            //        AmenitiesId = a.AmenitiesId,
-            //        Amenity_name = a.Name
-            //    });
-            return View(await asyncInnDbContext.ToListAsync());
+            var rooms = await _rooms.GetRoomAsync(); 
+            return View(rooms);
         }
 
         // GET: Rooms/Details/5
@@ -46,9 +37,7 @@ namespace Lab13_AsyncInn.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms
-                .Include(r => r.Layout)
-                .FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = await _rooms.GetRoomById(id); 
             if (room == null)
             {
                 return NotFound();
@@ -58,9 +47,9 @@ namespace Lab13_AsyncInn.Controllers
         }
 
         // GET: Rooms/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "Name");
+            ViewData["LayoutId"] = new SelectList(await _layout.GetLayoutAsync(), "LayoutId", "Name");
             return View();
         }
 
@@ -73,11 +62,10 @@ namespace Lab13_AsyncInn.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(room);
-                await _context.SaveChangesAsync();
+                await _rooms.CreateRoom(room);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "LayoutId", room.LayoutId);
+            ViewData["LayoutId"] = new SelectList(await _layout.GetLayoutAsync(), "LayoutId", "Name", room.LayoutId);
             return View(room);
         }
 
@@ -89,12 +77,12 @@ namespace Lab13_AsyncInn.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _rooms.GetRoomById(id);
             if (room == null)
             {
                 return NotFound();
             }
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "Name", room.LayoutId);
+            ViewData["LayoutId"] = new SelectList(await _layout.GetLayoutAsync(), "LayoutId", "Name", room.LayoutId);
             return View(room);
         }
 
@@ -114,12 +102,11 @@ namespace Lab13_AsyncInn.Controllers
             {
                 try
                 {
-                    _context.Update(room);
-                    await _context.SaveChangesAsync();
+                    await _rooms.UpdateRoom(room);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RoomExists(room.RoomId))
+                    if (!_rooms.RoomExists(room.RoomId))
                     {
                         return NotFound();
                     }
@@ -130,7 +117,7 @@ namespace Lab13_AsyncInn.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["LayoutId"] = new SelectList(_context.Layouts, "LayoutId", "LayoutId", room.LayoutId);
+            ViewData["LayoutId"] = new SelectList(await _layout.GetLayoutAsync(), "LayoutId", "Name", room.LayoutId);
             return View(room);
         }
 
@@ -142,9 +129,7 @@ namespace Lab13_AsyncInn.Controllers
                 return NotFound();
             }
 
-            var room = await _context.Rooms
-                .Include(r => r.Layout)
-                .FirstOrDefaultAsync(m => m.RoomId == id);
+            var room = await _rooms.GetRoomById(id);
             if (room == null)
             {
                 return NotFound();
@@ -158,15 +143,10 @@ namespace Lab13_AsyncInn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
+            var room = await _rooms.GetRoomById(id);
+            await _rooms.DeleteRoom(room);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RoomExists(int id)
-        {
-            return _context.Rooms.Any(e => e.RoomId == id);
-        }
     }
 }
