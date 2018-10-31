@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Lab13_AsyncInn.Models;
+using Lab13_AsyncInn.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Lab13_AsyncInn.Data;
-using Lab13_AsyncInn.Models;
+using System.Threading.Tasks;
 
 namespace Lab13_AsyncInn.Controllers
 {
     public class AmenitiesController : Controller
     {
-        private readonly AsyncInnDbContext _context;
+        private readonly IAmenities _amenities;
 
-        public AmenitiesController(AsyncInnDbContext context)
+        public AmenitiesController(IAmenities context)
         {
-            _context = context;
+            _amenities = context;
         }
 
         // GET: Amenities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Amenities.ToListAsync());
+            return View(await _amenities.GetAmenitiesAsync());
         }
 
         // GET: Amenities/Details/5
@@ -32,14 +28,11 @@ namespace Lab13_AsyncInn.Controllers
             {
                 return NotFound();
             }
-
-            var amenities = await _context.Amenities
-                .FirstOrDefaultAsync(m => m.AmenitiesId == id);
+            Amenities amenities = await _amenities.GetAmenitiesById(id);
             if (amenities == null)
             {
                 return NotFound();
             }
-
             return View(amenities);
         }
 
@@ -58,8 +51,7 @@ namespace Lab13_AsyncInn.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(amenities);
-                await _context.SaveChangesAsync();
+                await _amenities.CreateAmenities(amenities);
                 return RedirectToAction(nameof(Index));
             }
             return View(amenities);
@@ -73,7 +65,8 @@ namespace Lab13_AsyncInn.Controllers
                 return NotFound();
             }
 
-            var amenities = await _context.Amenities.FindAsync(id);
+
+            var amenities = await _amenities.GetAmenitiesById(id);
             if (amenities == null)
             {
                 return NotFound();
@@ -97,12 +90,11 @@ namespace Lab13_AsyncInn.Controllers
             {
                 try
                 {
-                    _context.Update(amenities);
-                    await _context.SaveChangesAsync();
+                    await _amenities.UpdateAmenities(amenities);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AmenitiesExists(amenities.AmenitiesId))
+                    if (!_amenities.AmenitiesExists(amenities.AmenitiesId))
                     {
                         return NotFound();
                     }
@@ -123,14 +115,11 @@ namespace Lab13_AsyncInn.Controllers
             {
                 return NotFound();
             }
-
-            var amenities = await _context.Amenities
-                .FirstOrDefaultAsync(m => m.AmenitiesId == id);
+            var amenities = await _amenities.GetAmenitiesById(id);
             if (amenities == null)
             {
                 return NotFound();
             }
-
             return View(amenities);
         }
 
@@ -139,15 +128,10 @@ namespace Lab13_AsyncInn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var amenities = await _context.Amenities.FindAsync(id);
-            _context.Amenities.Remove(amenities);
-            await _context.SaveChangesAsync();
+            var amenities = await _amenities.GetAmenitiesById(id);
+            await _amenities.DeleteAmenities(amenities);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AmenitiesExists(int id)
-        {
-            return _context.Amenities.Any(e => e.AmenitiesId == id);
-        }
     }
 }
