@@ -10,11 +10,11 @@ using Lab13_AsyncInn.Models;
 
 namespace Lab13_AsyncInn.Controllers
 {
-    public class RoomsInHotelsController : Controller
+    public class HotelAndRoomsController : Controller
     {
         private readonly AsyncInnDbContext _context;
 
-        public RoomsInHotelsController(AsyncInnDbContext context)
+        public HotelAndRoomsController (AsyncInnDbContext context)
         {
             _context = context;
         }
@@ -22,8 +22,8 @@ namespace Lab13_AsyncInn.Controllers
         // GET: RoomsInHotels
         public async Task<IActionResult> Index()
         {
-            var asyncInnDbContext = _context.HotelRooms.Include(h => h.Hotel).Include(h => h.Room);
-            return View(await asyncInnDbContext.ToListAsync());
+            var hotelRooms = await _context.HotelRooms.Include(h => h.Hotel).Include(h => h.Room).ToListAsync();
+            return View(hotelRooms);
         }
 
         // GET: RoomsInHotels/Details/5

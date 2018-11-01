@@ -6,13 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\RoomsInHotels\**" />
-    <Content Remove="Views\RoomsInHotels\**" />
-    <EmbeddedResource Remove="Views\RoomsInHotels\**" />
-    <None Remove="Views\RoomsInHotels\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Remove="Controllers\HomeController1.cs" />
     <Compile Remove="Migrations\20181025183723_addTables.cs" />
     <Compile Remove="Migrations\20181025183723_addTables.Designer.cs" />
@@ -24,14 +17,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\RoomsInHotels\Create.cshtml" />
-    <None Include="Views\RoomsInHotels\Delete.cshtml" />
-    <None Include="Views\RoomsInHotels\Details.cshtml" />
-    <None Include="Views\RoomsInHotels\Edit.cshtml" />
-    <None Include="Views\RoomsInHotels\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
