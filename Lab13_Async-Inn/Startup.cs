@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Lab13_AsyncInn.Models;
 using Lab13_AsyncInn.Models.Interfaces;
 using Lab13_AsyncInn.Models.Services;
+using System.IO;
 
 namespace Lab13_AsyncInn
 {

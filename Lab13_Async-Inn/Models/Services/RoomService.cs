@@ -28,7 +28,6 @@ namespace Lab13_AsyncInn.Models.Services
 
             _context.Rooms.Remove(room);
             await _context.SaveChangesAsync();
-            throw new NotImplementedException();
         }
 
         public async Task<IEnumerable<Room>> GetRoomAsync()
