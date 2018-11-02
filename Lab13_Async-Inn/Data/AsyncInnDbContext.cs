@@ -9,16 +9,42 @@ namespace Lab13_AsyncInn.Data
 {
     public class AsyncInnDbContext : DbContext
     {
+        /// <summary>
+        /// Setup DB context
+        /// </summary>
+        /// <param name="options"></param>
         public AsyncInnDbContext(DbContextOptions<AsyncInnDbContext> options) : base(options)
         {
 
         }
+        /// <summary>
+        /// Rooms table
+        /// </summary>
         public DbSet<Room> Rooms { get; set; }
+        /// <summary>
+        /// Many-to-many association table between hotels and rooms
+        /// </summary>
         public DbSet<HotelRoom> HotelRooms { get; set; }
+        /// <summary>
+        /// Hotels table
+        /// </summary>
         public DbSet<Hotel> Hotels { get; set; }
+        /// <summary>
+        /// Amenities table
+        /// </summary>
         public DbSet<Amenities> Amenities { get; set; }
+        /// <summary>
+        /// Many-to-many association table between rooms and amenities
+        /// </summary>
         public DbSet<RoomAmenities> RoomAmenities { get; set; }
+        /// <summary>
+        /// Layout tables
+        /// </summary>
         public DbSet<Layout> Layouts { get; set; }
+        /// <summary>
+        /// Setup composite keys and seed DB
+        /// </summary>
+        /// <param name="modelBuilder">Model builder</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<RoomAmenities>().HasKey(ra => new { ra.AmenitiesId, ra.RoomId });

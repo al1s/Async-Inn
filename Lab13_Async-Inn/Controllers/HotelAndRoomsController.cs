@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab13_AsyncInn.Data;
 using Lab13_AsyncInn.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Lab13_AsyncInn.Controllers
 {
@@ -62,6 +63,9 @@ namespace Lab13_AsyncInn.Controllers
         public async Task<IActionResult> Create([Bind("HotelId,RoomNumber,RoomId,Rate,PetFriendly")] HotelRoom hotelRoom)
         {
 
+            if(_context.HotelRooms.Any(hr => hr.RoomNumber == hotelRoom.RoomNumber))
+                ModelState.AddModelError("RoomNumber", $"The room number {hotelRoom.RoomNumber} already exists, please provide a room number");
+
             if (ModelState.IsValid)
             {
                 _context.Add(hotelRoom);
@@ -72,15 +76,11 @@ namespace Lab13_AsyncInn.Controllers
             ViewData["RoomId"] = new SelectList(_context.Rooms, "RoomId", "Name", hotelRoom.RoomId);
             return View(hotelRoom);
         }
-        // GET: Check whether we already have the room with a number user has entered
-        public JsonResult CheckRoomNumberExists(int roomNumber)
-        {
-            if (_context.HotelRooms.Any(hr =>
-                hr.RoomNumber == roomNumber
-            )) return Json(true);
-            else return Json(false);
-        }
 
+        public ActionResult RoomUnique(int roomNumber)
+        {
+            return Content(_context.HotelRooms.Any(hr => hr.RoomNumber == roomNumber) ? "false" : "true");
+        }
         // GET: RoomsInHotels/Edit/5
         public async Task<IActionResult> Edit(int? HotelId, int? RoomNumber)
         {

@@ -63,6 +63,8 @@ namespace Lab13_AsyncInn.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AmenitiesId,RoomId")] RoomAmenities roomAmenities)
         {
+            if(_context.RoomAmenities.Any(hr => hr.RoomId == roomAmenities.RoomId && hr.AmenitiesId == roomAmenities.AmenitiesId))
+                ModelState.AddModelError("Name", "The combination already exists, please provide another amenities-room association");
             if (ModelState.IsValid)
             {
                 _context.Add(roomAmenities);
