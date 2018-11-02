@@ -1,6 +1,9 @@
 # Lab 13: Async Inn Management System
 
 Basic Hotel/Room management system
+## Deployment (short lived)
+
+[Azure](https://asyncinn.azurewebsites.net/)
 
 ## Problem it solves
 
