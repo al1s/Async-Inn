@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lab13_AsyncInn.Models.Services
 {
+    /// <summary>
+    /// Check interface
+    /// </summary>
     public class AmenitiesService : IAmenities
     {
         private readonly AsyncInnDbContext _context;
@@ -19,7 +22,6 @@ namespace Lab13_AsyncInn.Models.Services
 
         public async Task CreateAmenities(Amenities amenities)
         {
-
             _context.Add(amenities);
             await _context.SaveChangesAsync();
         }
