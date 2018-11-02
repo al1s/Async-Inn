@@ -22,6 +22,13 @@ namespace Lab13_AsyncInn.Controllers
             return View(await _hotel.GetHotelAsync());
         }
 
+        // GET: Search hotels by name
+        [HttpPost]
+        public async Task<IActionResult> Index(string searchString)
+        {
+            return View(await _hotel.GetHotelByName(searchString));
+        }
+
         // GET: Hotels/Details/5
         public async Task<IActionResult> Details(int? id)
         {

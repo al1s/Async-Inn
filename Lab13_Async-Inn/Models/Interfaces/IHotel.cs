@@ -19,6 +19,11 @@ namespace Lab13_AsyncInn.Models.Interfaces
         /// <returns>Enumerable of hotel</returns>
         Task<IEnumerable<Hotel>> GetHotelAsync();
         /// <summary>
+        /// Get hotel from repository by name
+        /// </summary>
+        /// <param name="id">name of hotel</param>
+        Task<IEnumerable<Hotel>> GetHotelByName(string searchString);
+        /// <summary>
         /// Get hotel from repository by id
         /// </summary>
         /// <param name="id">id of hotel</param>

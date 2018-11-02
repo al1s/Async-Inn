@@ -39,6 +39,11 @@ namespace Lab13_AsyncInn.Models.Services
             return await _context.Hotels.FirstOrDefaultAsync(m => m.HotelId == id);
         }
 
+        public async Task<IEnumerable<Hotel>> GetHotelByName(string searchString)
+        {
+            return await _context.Hotels.Where(h => h.Name.Contains(searchString)).ToListAsync();
+        }
+
         public bool HotelExists(int id)
         {
             return _context.Hotels.Any(e => e.HotelId == id);
