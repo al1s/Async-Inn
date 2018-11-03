@@ -1,13 +1,16 @@
 # Lab 13: Async Inn Management System
 
 Basic Hotel/Room management system
+## Deployment (short lived)
+
+[Azure](https://asyncinn.azurewebsites.net/)
 
 ## Problem it solves
 
 Described in a previous [document](https://github.com/al1s/Lab12-Relational-Databases#problem-domain)
 
 ## Design requirements
-Think about the design of your website. What will it look like? What pages will exist? How do the pages interact and link to each other? For our website, we will have the following pages:
+The design decision was based on a UX aspect. The main customers of the site are hotel administrators and the tasks they want the site to perform are utilitarian - manage hotel chain. The interface is clean so the customer is provided with a right tool to have the job done without distracting to any visual anchors. For our website, we will have the following pages:
 
 - Home Page to greet the Hotel Admin. This page will also serve as a dashboard for the other locations of the site.
 - Hotels page that will allow the admin to create and edit new or existing hotels
